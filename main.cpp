@@ -45,47 +45,47 @@ int main() //int argc, char* argv[])
     printf("Opening socket...\n");
 	fflush(stdout);
     coap_address_init(&src_addr);
+    coap_address_init(&dst_addr);
 
 #ifdef UBU_IPv4
 	/* Prepare coap socket*/
 	src_addr.addr.sin.sin_family      = AF_INET;
 	src_addr.addr.sin.sin_port        = htons(0);
 	src_addr.addr.sin.sin_addr.s_addr = inet_addr("0.0.0.0"); //inet_addr("::1");
-	ctx = coap_new_context(&src_addr);
+
 
 	/* The destination endpoint */
     const char* server_uri = "coap://127.0.0.1/Temp";
-	coap_address_init(&dst_addr);
 	dst_addr.addr.sin.sin_family      = AF_INET;
 	dst_addr.addr.sin.sin_port        = htons(5683);
 	dst_addr.addr.sin.sin_addr.s_addr = inet_addr("127.0.0.1");
 #endif // UBU_IPV4
 
 #ifdef UBU_IPV6
+
 	/* Prepare coap socket*/
-	src_addr.addr.sin6.sin6_family = AF_INET6; //*********!!!!!!!!!!!!!!! WTF
-	src_addr.addr.sin.sin_family      = AF_INET6;
-	src_addr.addr.sin.sin_port = htons(0);
-	src_addr.addr.sin.sin_addr.s_addr = inet_addr("[::1]");
-	ctx = coap_new_context(&src_addr);
+	sockaddr_in6 sa;
+	sa.sin6_family = AF_INET6;
+	sa.sin6_port = htons(0);
+	inet_pton(AF_INET6, "::", &(sa.sin6_addr));
+	src_addr.addr.sin6 = sa;
 
 	/* The destination endpoint */
-    const char* server_uri = "coap//::/Temp";
-	coap_address_init(&dst_addr);
-	dst_addr.addr.sin.sin_family      = AF_INET6;
-	dst_addr.addr.sin.sin_port      = htons(5683);
-
-	in_addr ad;
-    int foo = inet_aton("10.1.0.1", &ad); //foo = o if invalid
-    //dst_addr.addr.sin.sin_addr.s_addr = inet_addr("[::]");
-    dst_addr.addr.sin.sin_addr.s_addr = ad.s_addr;
+    const char* server_uri = "coap://[::1]/Temp";
+    sockaddr_in6 dsa;
+    dsa.sin6_family = AF_INET6;
+	dsa.sin6_port = htons(5683);
+	inet_pton(AF_INET6, "::1", &(dsa.sin6_addr));
+	dst_addr.addr.sin6 = dsa;
 
 #endif // UBU_IPV6
+
+    ctx = coap_new_context(&src_addr);
 
 	/* Prepare the request */
 	printf("Preparing request...\n");
 	fflush(stdout);
-	coap_split_uri((const unsigned char*)server_uri, strlen(server_uri), &uri);
+	int r = coap_split_uri((const unsigned char*)server_uri, strlen(server_uri), &uri);
 	request            = coap_new_pdu();
 	request->hdr->type = COAP_MESSAGE_CON;
 	request->hdr->id   = coap_new_message_id(ctx);

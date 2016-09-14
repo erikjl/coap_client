@@ -5,7 +5,7 @@
 	<arpa/inet.h>
 	<netinet/in.h>
 
-1469643169 /usr/local/include/coap/coap.h
+1471931727 /usr/local/include/coap/coap.h
 	"libcoap.h"
 	"address.h"
 	"async.h"
@@ -27,21 +27,21 @@
 	"uthash.h"
 	"utlist.h"
 
-1469643169 /usr/local/include/coap/libcoap.h
+1471931727 /usr/local/include/coap/libcoap.h
 	<netinet/in.h>
 	<sys/socket.h>
 
-1469643169 /usr/local/include/coap/address.h
+1471931727 /usr/local/include/coap/address.h
 	<assert.h>
 	<stdint.h>
 	<string.h>
 	<lwip/ip_addr.h>
 	"uip.h"
 
-1469643169 /usr/local/include/coap/async.h
+1471931727 /usr/local/include/coap/async.h
 	"net.h"
 
-1469643169 /usr/local/include/coap/net.h
+1471931727 /usr/local/include/coap/net.h
 	<assert.h>
 	<stdlib.h>
 	<string.h>
@@ -54,59 +54,59 @@
 	"pdu.h"
 	"prng.h"
 
-1469643169 /usr/local/include/coap/coap_io.h
+1471931727 /usr/local/include/coap/coap_io.h
 	<assert.h>
 	<sys/types.h>
 	"address.h"
 
-1469643169 /usr/local/include/coap/coap_time.h
+1471931727 /usr/local/include/coap/coap_time.h
 	<stdint.h>
 	<lwip/sys.h>
 	"clock.h"
 
-1469643169 /usr/local/include/coap/option.h
+1471931727 /usr/local/include/coap/option.h
 	"bits.h"
 	"pdu.h"
 
-1469643169 /usr/local/include/coap/bits.h
+1471931727 /usr/local/include/coap/bits.h
 	<stdint.h>
 
-1469643169 /usr/local/include/coap/pdu.h
+1471931727 /usr/local/include/coap/pdu.h
 	"uri.h"
 	<lwip/pbuf.h>
 
-1469643169 /usr/local/include/coap/uri.h
+1471931727 /usr/local/include/coap/uri.h
 	"hashkey.h"
 	"str.h"
 
-1469643169 /usr/local/include/coap/hashkey.h
+1471931727 /usr/local/include/coap/hashkey.h
 	"str.h"
 
-1469643169 /usr/local/include/coap/str.h
+1471931727 /usr/local/include/coap/str.h
 	<string.h>
 
-1469643169 /usr/local/include/coap/prng.h
+1471931727 /usr/local/include/coap/prng.h
 	<stdlib.h>
 	<string.h>
 
-1469643169 /usr/local/include/coap/block.h
+1471931727 /usr/local/include/coap/block.h
 	"encode.h"
 	"option.h"
 	"pdu.h"
 
-1469643169 /usr/local/include/coap/encode.h
+1471931727 /usr/local/include/coap/encode.h
 	<string.h>
 	<strings.h>
 
-1469643169 /usr/local/include/coap/debug.h
+1471931727 /usr/local/include/coap/debug.h
 	<syslog.h>
 	"pdu.h"
 
-1469643169 /usr/local/include/coap/mem.h
+1471931727 /usr/local/include/coap/mem.h
 	<stdlib.h>
 	<lwip/memp.h>
 
-1469643169 /usr/local/include/coap/resource.h
+1471931727 /usr/local/include/coap/resource.h
 	<assert.h>
 	"utlist.h"
 	"uthash.h"
@@ -117,10 +117,10 @@
 	"net.h"
 	"subscribe.h"
 
-1469643169 /usr/local/include/coap/utlist.h
+1471931727 /usr/local/include/coap/utlist.h
 	<assert.h>
 
-1469643169 /usr/local/include/coap/uthash.h
+1471931727 /usr/local/include/coap/uthash.h
 	<string.h>
 	<stddef.h>
 	<stdlib.h>
@@ -128,7 +128,13 @@
 	<stdint.h>
 	<stdint.h>
 
-1469643169 /usr/local/include/coap/subscribe.h
+1471931727 /usr/local/include/coap/subscribe.h
 	"address.h"
 	"coap_io.h"
+
+1473830262 source:/home/erik/develop/coap_client/main.cpp
+	<coap/coap.h>
+	<stdio.h>
+	<arpa/inet.h>
+	<netinet/in.h>
 
