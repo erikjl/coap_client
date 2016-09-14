@@ -16,22 +16,18 @@ static void message_handler(
 	unsigned char* data;
 	size_t         data_len;
 
-    float code = (float)COAP_RESPONSE_CLASS(received->hdr->code);
-    printf("Response Code: %f\n", code);
-
-	//if (COAP_RESPONSE_CLASS(received->hdr->code) == 2)
-	//{
+	if (COAP_RESPONSE_CLASS(received->hdr->code) == 2)
+	{
 		if (coap_get_data(received, &data_len, &data))
 		{
 			printf("Received: %s\n", data);
 
 		}
-	//}
+	}
 }
 
-#define UBU_IPV6 //loopbak
-//#define UBU_IPv4 //loopback
-//#define RIVA
+#define RIVA
+//#define UBU_IPv4
 
 int main() //int argc, char* argv[])
 {
@@ -42,49 +38,53 @@ int main() //int argc, char* argv[])
 	coap_pdu_t*       request;
 	unsigned char     get_method = 1;
 
-    printf("Opening socket...\n");
-	fflush(stdout);
-    coap_address_init(&src_addr);
-
 #ifdef UBU_IPv4
 	/* Prepare coap socket*/
+	printf("Opening socket...\n");
+	fflush(stdout);
+	coap_address_init(&src_addr);
 	src_addr.addr.sin.sin_family      = AF_INET;
 	src_addr.addr.sin.sin_port        = htons(0);
 	src_addr.addr.sin.sin_addr.s_addr = inet_addr("0.0.0.0"); //inet_addr("::1");
 	ctx = coap_new_context(&src_addr);
 
 	/* The destination endpoint */
+	printf("Setting up destination...\n");
     const char* server_uri = "coap://127.0.0.1/Temp";
+	fflush(stdout);
 	coap_address_init(&dst_addr);
 	dst_addr.addr.sin.sin_family      = AF_INET;
 	dst_addr.addr.sin.sin_port        = htons(5683);
 	dst_addr.addr.sin.sin_addr.s_addr = inet_addr("127.0.0.1");
-#endif // UBU_IPV4
+#endif // UBU
 
-#ifdef UBU_IPV6
+#ifdef RIVA
 	/* Prepare coap socket*/
-	src_addr.addr.sin6.sin6_family = AF_INET6; //*********!!!!!!!!!!!!!!! WTF
+	printf("Opening socket...\n");
+	fflush(stdout);
+	coap_address_init(&src_addr);
 	src_addr.addr.sin.sin_family      = AF_INET6;
-	src_addr.addr.sin.sin_port = htons(0);
-	src_addr.addr.sin.sin_addr.s_addr = inet_addr("[::1]");
+	src_addr.addr.sin6.sin6_port      = htons(0);
+	in6_addr v6addr; //netinet/in.h:209 ***defined as in8 & int16 & int32
+	v6addr.__u6_addr16
+	src_addr.addr.sin6.sin6_addr.__in6_u = in6_addr(); //= inet_addr("::1");
 	ctx = coap_new_context(&src_addr);
 
 	/* The destination endpoint */
-    const char* server_uri = "coap//::/Temp";
+	printf("Setting up destination...\n");
+    const char* server_uri = "coap://fe80::ff:1:1:10/Temp";
+	fflush(stdout);
 	coap_address_init(&dst_addr);
 	dst_addr.addr.sin.sin_family      = AF_INET6;
-	dst_addr.addr.sin.sin_port      = htons(5683);
+	dst_addr.addr.sin6.sin6_port      = htons(5683);
+	dst_addr.addr.sin6.sin_addr.s_addr = inet_addr("fe80::ff:1:1:10");;
 
-	in_addr ad;
-    int foo = inet_aton("10.1.0.1", &ad); //foo = o if invalid
-    //dst_addr.addr.sin.sin_addr.s_addr = inet_addr("[::]");
-    dst_addr.addr.sin.sin_addr.s_addr = ad.s_addr;
-
-#endif // UBU_IPV6
+#endif // RIVA
 
 	/* Prepare the request */
 	printf("Preparing request...\n");
 	fflush(stdout);
+	//EJL: added cast [compile error]
 	coap_split_uri((const unsigned char*)server_uri, strlen(server_uri), &uri);
 	request            = coap_new_pdu();
 	request->hdr->type = COAP_MESSAGE_CON;
@@ -117,5 +117,7 @@ int main() //int argc, char* argv[])
 			coap_read( ctx );
 	}
 
+	 //har str[100];
+	 //gets(str);
   return 0;
 }

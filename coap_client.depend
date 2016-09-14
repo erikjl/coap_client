@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1472254172 source:/home/erik/dev/coap_client/main.cpp
+1473462408 source:/home/erik/dev/coap_client/main.cpp
 	<coap/coap.h>
 	<stdio.h>
 	<arpa/inet.h>
+	<netinet/in.h>
 
 1469643169 /usr/local/include/coap/coap.h
 	"libcoap.h"
